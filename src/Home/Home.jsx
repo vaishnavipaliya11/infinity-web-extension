@@ -27,15 +27,49 @@ const Home = () => {
         setUserGoalStyle({ display: "none" });
       }
 
+      const url =
+    "https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&city=Nagpur&country=India&key=cffbc1552ecc4605bb2e50e9a86243ab";
+
+  useEffect(() => {
+    axios.get(url).then((res) => setData(res.data.data[0]));
+  }, []); 
+
     useEffect(() => {
         document.body.style.backgroundImage =
           "url('https://source.unsplash.com/1600x900/?')";
       },[]); 
 
-  return (
-    <div>
-    <h1>{QuoteData[randomQuote].quote}</h1>
-    <div>
+      const apiData = [
+        {
+          cityName: data.city_name,
+          date: data.datetime,
+          temp: data.temp,
+          windSpeed: data.wind_spd,
+          windDirection: data.wind_cdir_full,
+        },
+      ];
+
+ return (
+    <div className="bg-img-container">
+      <h1>
+        {apiData.map(({ cityName, date, temp, windSpeed, windDirection }) => {
+          return (
+            <div className="weather">
+              <div className="display-row topnav text-color">
+                <p>{cityName}</p>
+
+                <p>
+                  <span>
+                    <i class="bi bi-clouds"></i>
+                  </span>
+                  {temp}°C
+                </p>
+              </div>
+              <div className="quote text-color">
+                <h5>{QuoteData[randomQuote].quote}</h5>
+                <p>{newDate}</p>
+
+                <div>
                   <p>
                     {ques} {userName}
                   </p>
@@ -65,8 +99,15 @@ const Home = () => {
                   <p> {userGoal}</p>
                 </div>
               </div>
-    
-  )
-}
 
-export {Home}
+              <div className="display-row footer text-color">
+                <p>{windDirection}</p>
+                <p>WindSpeed : {windSpeed}(m/s)</p>
+              </div>
+            </div>
+          );
+        })}
+      </h1>
+    </div>
+  );
+};

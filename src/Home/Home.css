@@ -41,3 +41,48 @@ body {
   .btn-submit:hover {
     cursor: pointer;
   }
+
+  .main {
+    height: 100%;
+  }
+  .main-title {
+    margin: 10% auto;
+  }
+  .quote {
+    margin: 8rem;
+    color: var(--text-color);
+  }
+  
+  .topnav {
+    margin: -0.1rem 0.5rem;
+  }
+  .footer {
+    margin: 0;
+  }
+  
+  .weather {
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    padding: 0;
+    margin-top: -1.5rem;
+    margin-bottom: -10rem;
+  }
+  .display-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .bg-img-container {
+    margin: 0;
+    padding-bottom: 5rem;
+  }
+  
+  .text-color {
+    color: var(--text-color);
+  }
+  .question-container {
+    color: brown;
+  }
+  
