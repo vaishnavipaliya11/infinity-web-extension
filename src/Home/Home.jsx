@@ -60,8 +60,7 @@ const Home = () => {
     }
   }, []);
 
-  console.log(data);
-  // console.log(quotes);
+
 
   const apiData = [
     {
@@ -70,15 +69,14 @@ const Home = () => {
       temp: data?.main?.temp,
       windSpeed: data?.wind?.speed,
       windDeg: data?.wind?.deg,
-      windDirection: data.wind_cdir_full,
       description: data?.weather?.[0]?.description,
     },
   ];
-  console.log(data?.weather?.[0]?.description);
+
   return (
     <div>
       {apiData.map(
-        ({ description, windDeg, temp, windSpeed, windDirection }) => {
+        ({ description, windDeg, temp, windSpeed }) => {
           return (
             <div className="weather">
               <div className="display-row topnav text-color">
