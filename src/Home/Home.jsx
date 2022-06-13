@@ -6,7 +6,11 @@ import axios from "axios";
 
 const Home = () => {
   const randomQuote = Math.floor(Math.random() * Math.floor(QuoteData.length));
-  const newDate =  Date();
+  const today = new Date();
+  const newDate =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const todayDate =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
   const [data, setData] = useState({});
   const [ques, setQues] = useState("what is your name?");
@@ -17,7 +21,7 @@ const Home = () => {
   const [nameStyle, setStyle] = useState();
   const [goalStyle, setGoalStyle] = useState({ display: "none" });
   const [userGoalStyle, setUserGoalStyle] = useState({ display: "block" });
-
+  const [userQuote, setUserQuote] = useState("")
   function handelBtn() {
     setQues("Good Evening");
     setUserName(name);
@@ -31,48 +35,68 @@ const Home = () => {
   }
 
   useEffect(() => {
+    try {
+    axios.get("https://api.quotable.io/random?maxLength=40").then((res) => setUserQuote(res.data.content));
+  
+  
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  useEffect(() => {
     document.body.style.backgroundImage =
       "url('https://source.unsplash.com/1600x900/?')";
   }, []);
 
   const url =
-    "https://api.weatherbit.io/v2.0/current?lat=35.7796&lon=-78.6382&city=Nagpur&country=India&key=cffbc1552ecc4605bb2e50e9a86243ab";
+    "https://api.openweathermap.org/data/2.5/weather?lat=35.7796&lon=-78.6382&appid=cdbfc1f246c44295625967cd2f226343&units=metric";
 
   useEffect(() => {
-    axios.get(url).then((res) => setData(res.data.data[0]));
+    try {
+      axios.get(url).then((res) => setData(res.data));
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  console.log(data);
+  // console.log(quotes);
 
   const apiData = [
     {
       cityName: data.city_name,
       date: data.datetime,
-      temp: data.temp,
-      windSpeed: data.wind_spd,
+      temp: data?.main?.temp,
+      windSpeed: data?.wind?.speed,
+      windDeg: data?.wind?.deg,
       windDirection: data.wind_cdir_full,
+      description: data?.weather?.[0]?.description,
     },
   ];
-
+  console.log(data?.weather?.[0]?.description);
   return (
-    <div className="bg-img-container">
-
-      <h1>
-        {apiData.map(({ cityName, date, temp, windSpeed, windDirection }) => {
+    <div>
+      {apiData.map(
+        ({ description, windDeg, temp, windSpeed, windDirection }) => {
           return (
             <div className="weather">
               <div className="display-row topnav text-color">
-                <p>{cityName}</p>
+                <div className="display-column temp-heading">
+                  <h2>Nagpur</h2>
 
-                <p>
-                  <span>
-                    <i class="bi bi-clouds"></i>
-                  </span>
-                  {temp}°C
-                </p>
+                  <small>{temp}°C</small>
+                </div>
+
+                <div className="display-column temp-heading">
+                  <h2>Date: {todayDate}</h2>
+                  <small>{newDate}</small>
+                </div>
               </div>
-              <div className="quote text-color">
-                <h5>{QuoteData[randomQuote].quote}</h5>
-                <p>{newDate}</p>
-
+              
+              <div className="quote text-color display-column">
+                
+              <h2>{userQuote}</h2>
                 <div>
                   <p>
                     {ques} {userName}
@@ -114,14 +138,14 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="display-row footer text-color">
-                <p>{windDirection}</p>
-                <p>WindSpeed : {windSpeed}(m/s)</p>
+              <div className="display-column footer text-color">
+                <h2>WindSpeed: {windSpeed}</h2>
+                <small>{description}</small>
               </div>
             </div>
           );
-        })}
-      </h1>
+        }
+      )}
     </div>
   );
 };
