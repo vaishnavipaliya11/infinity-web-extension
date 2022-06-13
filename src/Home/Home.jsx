@@ -64,8 +64,6 @@ const Home = () => {
 
   const apiData = [
     {
-      cityName: data.city_name,
-      date: data.datetime,
       temp: data?.main?.temp,
       windSpeed: data?.wind?.speed,
       windDeg: data?.wind?.deg,
