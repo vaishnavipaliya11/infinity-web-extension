@@ -50,7 +50,7 @@ const Home = () => {
   }, []);
 
   const url =
-    "https://api.openweathermap.org/data/2.5/weather?lat=35.7796&lon=-78.6382&appid=cdbfc1f246c44295625967cd2f226343&units=metric";
+    "https://api.openweathermap.org/data/2.5/weather?lat=21.14631&lon=79.08491&appid=cdbfc1f246c44295625967cd2f226343&units=metric";
 
   useEffect(() => {
     try {
