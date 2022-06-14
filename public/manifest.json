@@ -2,7 +2,7 @@
   "manifest_version": 2 ,
   "name":"extention",
   "author":"vaishnavi",
-  "version":"1.0.1",
+  "version":"1.0.2",
   "description":"replace new tab with this",
 
   "chrome_url_overrides":{
